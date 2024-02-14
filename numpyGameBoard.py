@@ -1,7 +1,17 @@
 import numpy as np
 
 class board:
+    base = np.zeros((7,7))
+    base[0][6] = -1
+    base[1][6] = -1
+    base[6][3] = -1
+    base[6][4] = -1
+    base[6][5] = -1
+    base[6][6] = -1
+    boardMonths = np.array([np.arange(1,7,1), np.arange(7,13,1)])
     
+    boardDays = np.array([ np.arange(1,8,1) , np.arange(8,15,1) , np.arange(15,22,1) , np.arange(22,29,1) , np.arange(29,36,1) ])
+   
     def __init__(self, month, day):
         self.month = month
         self.day = day
@@ -56,12 +66,6 @@ class board:
                         row += " "
                     row += ' '+str(j) + " |"
             print(row)
-    
-    base = np.zeros((7,7))
-    
-    boardMonths = np.array([np.arange(1,7,1), np.arange(7,13,1)])
-    
-    boardDays = np.array([ np.arange(1,8,1) , np.arange(8,15,1) , np.arange(15,22,1) , np.arange(22,29,1) , np.arange(29,36,1) ])
     for i in range(4):
         boardDays[4][3+i] = -1
     
@@ -73,8 +77,6 @@ class board:
 
 
 b = board(7, 2)
-for i in range(len(b.base)):
-    for j in range(len(b.base[i])):
-        b.base[i][j] = 5
+
 print(b.displayBoard())
-#b.makeBoard()
+print(b.base)
