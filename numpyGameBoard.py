@@ -68,7 +68,19 @@ class board:
             print(row)
     for i in range(4):
         boardDays[4][3+i] = -1
-    
+    def createPieces(self):
+        block_shape = pieces(np.array([1,1,1],[1,1,1]))
+        l_shape = pieces(np.array([1,0],[1,0],[1,0],[1,1]))
+        corner_shape = pieces(np.array([1,0,0],[1,0,0],[1,1,1]))
+        c_shape = pieces(np.array([1,1],[1,0],[1,0],[1,1]))
+        skwiggle_shape = pieces(np.array([1,0],[1,0],[1,1],[0,1]))
+        f_shape = pieces(np.array([1,0],[1,1],[1,0],[1,0]))
+        hat_shape = pieces(np.array([1,0],[1,1],[1,1]))
+        zig_shape = pieces(np.array([1,1,0],[0,1,0],[0,1,1]))
+        self.pieces = [block_shape,l_shape,corner_shape,c_shape,skwiggle_shape,f_shape,hat_shape,zig_shape]
+
+
+
     
 class pieces:
     def __init__(self, piece, rot = 4):
