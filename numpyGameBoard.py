@@ -70,6 +70,18 @@ class board:
         boardDays[4][3+i] = -1
     
     
+class pieces:
+    def __init__(self, piece, rot = 4):
+        self.piece = piece
+        self.rotations = rot
+    def rotate(self):
+        self.piece = np.rot90(self.piece)
+    def getArray(self):
+        return self.piece
+    def getRot(self):
+        return self.rotations
+    def shape(self):
+        return self.piece.shape
     
 
 
