@@ -15,6 +15,7 @@ class board:
     def __init__(self, month, day):
         self.month = month
         self.day = day
+        self.pieces = []
         
         if self.month < 7:
             self.base[0][(self.month%6)-1] = -1
@@ -69,20 +70,28 @@ class board:
     for i in range(4):
         boardDays[4][3+i] = -1
     def createPieces(self):
-        block_shape = pieces(np.array([1,1,1],[1,1,1]))
-        l_shape = pieces(np.array([1,0],[1,0],[1,0],[1,1]))
-        corner_shape = pieces(np.array([1,0,0],[1,0,0],[1,1,1]))
-        c_shape = pieces(np.array([1,1],[1,0],[1,0],[1,1]))
-        skwiggle_shape = pieces(np.array([1,0],[1,0],[1,1],[0,1]))
-        f_shape = pieces(np.array([1,0],[1,1],[1,0],[1,0]))
-        hat_shape = pieces(np.array([1,0],[1,1],[1,1]))
-        zig_shape = pieces(np.array([1,1,0],[0,1,0],[0,1,1]))
+        block_shape = piece(np.array([[1,1,1],[1,1,1]]))
+        l_shape = piece(np.array([[1,0],[1,0],[1,0],[1,1]]))
+        corner_shape = piece(np.array([[1,0,0],[1,0,0],[1,1,1]]))
+        c_shape = piece(np.array([[1,1],[1,0],[1,0],[1,1]]))
+        skwiggle_shape = piece(np.array([[1,0],[1,0],[1,1],[0,1]]))
+        f_shape = piece(np.array([[1,0],[1,1],[1,0],[1,0]]))
+        hat_shape = piece(np.array([[1,0],[1,1],[1,1]]))
+        zig_shape = piece(np.array([[1,1,0],[0,1,0],[0,1,1]]))
         self.pieces = [block_shape,l_shape,corner_shape,c_shape,skwiggle_shape,f_shape,hat_shape,zig_shape]
+    def placePiece(self, piece, x, y):
+        length, width = piece.piece.shape
+        ex = x+width
+        ey = y + length
+        self.base[y:ey, x:ex] -= piece.piece
+    def outbound(self, piece, x, y):
+        #if (x+self.pieces[piece].shape[0])
+        print(piece.shape())
 
 
 
     
-class pieces:
+class piece:
     def __init__(self, piece, rot = 4):
         self.piece = piece
         self.rotations = rot
@@ -103,4 +112,7 @@ class pieces:
 b = board(7, 2)
 
 print(b.displayBoard())
+print(b.base)
+b.createPieces()
+b.placePiece(b.pieces[0], 0,0)
 print(b.base)
