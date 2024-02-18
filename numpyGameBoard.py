@@ -79,19 +79,34 @@ class board:
         hat_shape = piece(np.array([[1,0],[1,1],[1,1]]))
         zig_shape = piece(np.array([[1,1,0],[0,1,0],[0,1,1]]))
         self.pieces = [block_shape,l_shape,corner_shape,c_shape,skwiggle_shape,f_shape,hat_shape,zig_shape]
-    def placePiece(self, piece, x, y):
+    def placePiece(self, board, piece, x, y):
         length, width = piece.piece.shape
         ex = x+width
         ey = y + length
         if self.outbound(piece, x, y) is False:
-            self.base[y:ey, x:ex] -= piece.piece
+            board[y:ey, x:ex] -= piece.piece
     def outbound(self, piece, x, y):
-        if((x + piece.piece.shape[1] > 7) or (x - piece.piece.shape[1]) < 0):
+        if(x + piece.piece.shape[1] > 7):
             return True
-        if((y + piece.piece.shape[0] > 7) or (y - piece.piece.shape[0]) < 0):
+        if(y + piece.piece.shape[0] > 7):
             return True
         else: return False
-        
+    def illegal(self, piece, x, y):
+        boardCopy = np.copy(self.base)
+        self.placePiece(boardCopy, piece, x, y)
+        if -2 in boardCopy:
+            return False                
+        else: return True
+    def solve(self, z):
+        if z < 8:
+            for i in range(self.base.shape[1]):
+                for j in range(self.base.shape[0]):
+                    if (self.outbound(self.pieces[z], i, j) is False) and (self.illegal(self.pieces[z], i, j) is True):
+                        self.placePiece(self.base, self.pieces[z], i, j)
+                        print(self.base)
+                        self.solve(z+1)
+
+                    
 
 
 
@@ -115,10 +130,16 @@ class piece:
 
 
 b = board(7, 2)
+b.createPieces()
+b.solve(0)
+#print(b.outbound(b.pieces[0],2,1))
 
+'''
 print(b.displayBoard())
 print(b.base)
 b.createPieces()
-b.placePiece(b.pieces[0], 3,6)
+b.placePiece(b.base, b.pieces[0], 3,6)
 print(b.base)
 print(b.outbound(b.pieces[0],3,4))
+
+'''
