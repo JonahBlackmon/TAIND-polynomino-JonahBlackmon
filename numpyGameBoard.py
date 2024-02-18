@@ -83,10 +83,15 @@ class board:
         length, width = piece.piece.shape
         ex = x+width
         ey = y + length
-        self.base[y:ey, x:ex] -= piece.piece
+        if self.outbound(piece, x, y) is False:
+            self.base[y:ey, x:ex] -= piece.piece
     def outbound(self, piece, x, y):
-        #if (x+self.pieces[piece].shape[0])
-        print(piece.shape())
+        if((x + piece.piece.shape[1] > 7) or (x - piece.piece.shape[1]) < 0):
+            return True
+        if((y + piece.piece.shape[0] > 7) or (y - piece.piece.shape[0]) < 0):
+            return True
+        else: return False
+        
 
 
 
@@ -114,5 +119,6 @@ b = board(7, 2)
 print(b.displayBoard())
 print(b.base)
 b.createPieces()
-b.placePiece(b.pieces[0], 3,3)
+b.placePiece(b.pieces[0], 3,6)
 print(b.base)
+print(b.outbound(b.pieces[0],3,4))
